@@ -6,6 +6,17 @@ export async function getAll() {
 }
 
 export async function getOne(id) {
-  const result = await pool.query("SELECT * FROM book WHERE id_book = $1", [id]);
+  const result = await pool.query("SELECT * FROM book WHERE id = $1", [id]);
   return result.rows.length > 0 ? result.rows[0] : null;
+}
+
+export async function addOne(book) {
+  const result = await pool.query("INSERT INTO book (name,author,isbn) VALUES($1,$2,$3)", [book.name, book.author,book.isbn]);
+  return result.rows;
+}
+
+export async function deleteOne(id) {
+  console.log("delete:"+id);
+  const result = await pool.query("DELETE FROM book WHERE id = $1", [id]);
+  return result.rows;
 }
