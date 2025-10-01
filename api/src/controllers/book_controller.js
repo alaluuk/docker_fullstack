@@ -1,4 +1,4 @@
-import { getAll, getOne, addOne, deleteOne } from "../models/book_model.js";
+import { getAll, getOne, addOne, updateOne, deleteOne } from "../models/book_model.js";
 
 export async function getBooks(req, res, next) {
   try {
@@ -26,6 +26,15 @@ export async function addBook(req, res, next) {
   try {
     console.log(req.body);
     const response = await addOne(req.body);
+    res.json(response);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function updateBook(req, res, next) {
+  try {
+    const response = await updateOne(req.params.id, req.body);
     res.json(response);
   } catch (err) {
     next(err);
