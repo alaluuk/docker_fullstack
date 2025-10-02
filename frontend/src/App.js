@@ -28,13 +28,25 @@ function App() {
       {books.length === 0 ? (
         <p>Ei kirjoja löytynyt.</p>
       ) : (
-        <ul>
-          {books.map((book) => (
-            <li key={book.id}>
-              <strong>{book.title}</strong> — {book.author}
-            </li>
-          ))}
-        </ul>
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Author</th>
+              <th>ISBN</th>
+            </tr>
+          </thead>
+          <tbody>
+            {books.map((book) => (
+              <tr key={book.id}>
+                <td>{book.name}</td>
+                <td>{book.author}</td>
+                <td>{book.isbn}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
       )}
     </div>
   );
