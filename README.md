@@ -136,3 +136,14 @@ Voit suorittaa edellä luodun dump-tiedoston komennolla:
 <pre>
 psql -U netuser -h 127.0.0.1 -d netdb -f dbdump.sql
 </pre>
+
+<h2>Dockerin kannalta oleelliset tiedostot</h2>
+<ul>
+<li>docker-compose.yml</li>
+<li>docker-compose.override.yml(development tilassa)</li>
+<li>.env</li>
+<li>postgres.conf (jos halutaan saada paikalliseen PostgreSQL-palvelimeen tuotantopalvelinta vastaavat asetukset)</li>
+<li>api/Dockerfile</li>
+<li>frontend/Dockerfile</li>
+<li>frontend/.env</li>
+</ul>
