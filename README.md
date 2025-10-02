@@ -20,32 +20,7 @@ docker compose up --build
 </pre>
   </li>
 </ul>
-
 </li>
-<li>Luo tietokanta:
-<ul>
-<li>avaa oinen komentokehote ja suorita seuraava komento muodostaaksesi yhteyden kontin Postgres-palvelimeen:
-<pre>
-docker exec -it postgres_db psql -U netuser -d netdb
-</pre>
-<li>suorita SQL-koodit
-<pre>
-CREATE TABLE book (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255),
-  author VARCHAR(255),
-  isbn VARCHAR(255)
-);
-</pre>
-<pre>
-insert into book (name, author, isbn) VALUES('Everything You Ever Wanted to Know','Upton','082305649x');
-insert into book (name, author, isbn) VALUES('Photography','Vilppu','205711499');
-insert into book (name, author, isbn) VALUES('Drawing Manual Vilppu','Zelanshi','1892053039');
-insert into book (name, author, isbn) VALUES('TBA','Zelanshi','0534613932');
-insert into book (name, author, isbn) VALUES('Shaping Space','Speight','0534613934');
-</pre>
-</li>
-</ul>
 <li>Avaa selaimeen sivu http://localhost:3001/book jolloin sinun pitäisi nähdä book-taulun data</li>
 <li>Avaa selaimeen sivu http://localhost:3000 jolloin sinun pitäisi nähdä React-sovelluksessa tietokannassa olevat kirjat</li>
 <li>Kokeile muokata React sovelluksen App.js tiedostoa ja tutki päivittyykö web-sivu</li>
@@ -72,6 +47,34 @@ Jolloin suoritetaan vain docker-compose.yml
   <li>Kun haluat lopettaa kehityksen, anna komento <b>docker compose down</b> ja kun haluat jatkaa kehitystä anna komento <b>docker compose up --build</b></li>
   <li>Jos teet muutoksia Dockerfile tai package.json tiedostoihin, sinun tulee käynnistää kontit uudelleen.</li>
 </ul>
+
+<h2>Tietokanta</h2>
+<p>
+Kaikki .sql ja .sh tiedostot, jotka on mountattu hakemistoon /docker-entrypoint-initdb.d/, ajetaan vain kerran konttia alustettaessa – eli silloin kun Postgres käynnistyy ensimmäistä kertaa ja data-hakemisto (/var/lib/postgresql/data) on tyhjä.
+
+Koska <b>docker-compose.yml</b>-tiedostossa on rivi <b>./book.sql:/docker-entrypoint-initdb.d/book.sql:ro</b>, suoritetaan tiedostossa <b>book.sql</b> olevat koodit:
+<pre>
+CREATE TABLE book (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255),
+  author VARCHAR(255),
+  isbn VARCHAR(255)
+);
+
+insert into book (name, author, isbn) VALUES('Everything You Ever Wanted to Know','Upton','082305649x');
+insert into book (name, author, isbn) VALUES('Photography','Vilppu','205711499');
+insert into book (name, author, isbn) VALUES('Drawing Manual Vilppu','Zelanshi','1892053039');
+insert into book (name, author, isbn) VALUES('TBA','Zelanshi','0534613932');
+insert into book (name, author, isbn) VALUES('Shaping Space','Speight','0534613934');
+</pre>
+<p>
+Jos muokkaat tuota tiedostoa ja haluat, että se suoritetaan uudelleen, sinun on ajettava komento <b>docker compose down -v</b>
+</p>
+<p>Muodostaaksesi yhteyden kontin Postgres-palvelimeen, suorita komento:
+<pre>
+docker exec -it postgres_db psql -U netuser -d netdb
+</pre>
+</p>
 
 <h2>Deploy Renderiin</h2>
 <p>
