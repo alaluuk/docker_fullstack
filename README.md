@@ -124,7 +124,7 @@ docker push myusername/docker_example-frontend:latest
 
 Tässä esimerkissä ei tarvita PostgreSQL serveriä, koska sitä ajetaan Dockerissa. Jos haluat kytheytyä tietokantaan suoraan isäntäkoneelta tarvitset jonkin clientin, kuten <b>psql</b> tai pgAdmin. Jos haluat luoda dump-tiedostoja tarvitset <b>pg_dump</b> sovelluksen. Voit asentaa ne, kun lataat installointi sovelluksen sivulta https://www.postgresql.org/download/windows/ ja asennuksessa valitset asennettavaksi <b>Command Line Tools</b>, voit halutessasi asentaa myös graafisen clientin <b>pgAdmin 4</b>. Lisäksi kannattaa laittaa Windowsin ympäristömuuttujiin polku C:\Program Files\PostgreSQL\17\bin
 
-<h2>Database dump</h2>
+<h3>Database dump</h3>
 
 Voit luoda tietokannasta dumpin komennolla:
 <pre>
