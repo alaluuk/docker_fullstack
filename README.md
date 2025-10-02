@@ -113,7 +113,7 @@ Render ei osaa lukea docker-compose.yml -tiedostoa ja ajaa kaikkia palveluita yh
   <li>Backend</li>
   <li>Frontend</li>
 </ol>
-<p>Aluksi kannattaa luoda Renderiin PostgreSQL tietokanta ja luoda siihen samanlainen tietokanta kuin omalla koneella (esim. dump-tiedoston avulla).</p>
+<p>Aluksi kannattaa luoda Renderiin PostgreSQL tietokanta ja luoda siihen samanlaiset taulut kuin omalla koneella (esim. dump-tiedoston avulla).</p>
 
 <h3>Deploy Docker Hubin kautta</h3>
 <h4>Backend</h4>
