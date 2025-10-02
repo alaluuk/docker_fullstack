@@ -76,6 +76,34 @@ docker exec -it postgres_db psql -U netuser -d netdb
 </pre>
 </p>
 
+<h2>PostgresSQL</h2>
+
+Tässä esimerkissä ei tarvita PostgreSQL serveriä, koska sitä ajetaan Dockerissa. Jos haluat kytheytyä tietokantaan suoraan isäntäkoneelta tarvitset jonkin clientin, kuten <b>psql</b> tai pgAdmin. Jos haluat luoda dump-tiedostoja tarvitset <b>pg_dump</b> sovelluksen. Voit asentaa ne, kun lataat installointi sovelluksen sivulta https://www.postgresql.org/download/windows/ ja asennuksessa valitset asennettavaksi <b>Command Line Tools</b>, voit halutessasi asentaa myös graafisen clientin <b>pgAdmin 4</b>. Lisäksi kannattaa laittaa Windowsin ympäristömuuttujiin polku C:\Program Files\PostgreSQL\17\bin
+
+<h3>Database dump</h3>
+
+Voit luoda tietokannasta dumpin komennolla:
+<pre>
+pg_dump -U netuser -h 127.0.0.1 -p 5432 netdb> dbdump.sql
+</pre>
+Huomaa, että sinulla tulee olla asennettuna PostgreSQL, tai ainakin tuo pg_dump
+
+Voit suorittaa edellä luodun dump-tiedoston komennolla:
+<pre>
+psql -U netuser -h 127.0.0.1 -d netdb -f dbdump.sql
+</pre>
+
+<h2>Dockerin kannalta oleelliset tiedostot</h2>
+<ul>
+<li>docker-compose.yml</li>
+<li>docker-compose.override.yml(development tilassa)</li>
+<li>.env</li>
+<li>postgres.conf (jos halutaan saada paikalliseen PostgreSQL-palvelimeen tuotantopalvelinta vastaavat asetukset)</li>
+<li>api/Dockerfile</li>
+<li>frontend/Dockerfile</li>
+<li>frontend/.env</li>
+</ul>
+
 <h2>Deploy Renderiin</h2>
 <p>
 Render ei osaa lukea docker-compose.yml -tiedostoa ja ajaa kaikkia palveluita yhdellä komennolla. Render tukee kuitenkin Dockerfilea, eli voit ajaa yhden kontin kerrallaan suoraan Dockerfilestä. Joten jaetaan sovellus osiin seuraavasti:
@@ -85,7 +113,7 @@ Render ei osaa lukea docker-compose.yml -tiedostoa ja ajaa kaikkia palveluita yh
   <li>Backend</li>
   <li>Frontend</li>
 </ol>
-<p>Aluksi kannattaa luoda Renderiin PostgreSQL tietokanta ja luoda siihen book-taulu</p>
+<p>Aluksi kannattaa luoda Renderiin PostgreSQL tietokanta ja luoda siihen samanlainen tietokanta kuin omalla koneella (esim. dump-tiedoston avulla).</p>
 
 <h3>Deploy Docker Hubin kautta</h3>
 <h4>Backend</h4>
@@ -118,32 +146,3 @@ docker push myusername/docker_example-frontend:latest
 </ul>
  </li>
 </ol>
-
-
-<h2>PostgresSQL</h2>
-
-Tässä esimerkissä ei tarvita PostgreSQL serveriä, koska sitä ajetaan Dockerissa. Jos haluat kytheytyä tietokantaan suoraan isäntäkoneelta tarvitset jonkin clientin, kuten <b>psql</b> tai pgAdmin. Jos haluat luoda dump-tiedostoja tarvitset <b>pg_dump</b> sovelluksen. Voit asentaa ne, kun lataat installointi sovelluksen sivulta https://www.postgresql.org/download/windows/ ja asennuksessa valitset asennettavaksi <b>Command Line Tools</b>, voit halutessasi asentaa myös graafisen clientin <b>pgAdmin 4</b>. Lisäksi kannattaa laittaa Windowsin ympäristömuuttujiin polku C:\Program Files\PostgreSQL\17\bin
-
-<h3>Database dump</h3>
-
-Voit luoda tietokannasta dumpin komennolla:
-<pre>
-pg_dump -U netuser -h 127.0.0.1 -p 5432 netdb> dbdump.sql
-</pre>
-Huomaa, että sinulla tulee olla asennettuna PostgreSQL, tai ainakin tuo pg_dump
-
-Voit suorittaa edellä luodun dump-tiedoston komennolla:
-<pre>
-psql -U netuser -h 127.0.0.1 -d netdb -f dbdump.sql
-</pre>
-
-<h2>Dockerin kannalta oleelliset tiedostot</h2>
-<ul>
-<li>docker-compose.yml</li>
-<li>docker-compose.override.yml(development tilassa)</li>
-<li>.env</li>
-<li>postgres.conf (jos halutaan saada paikalliseen PostgreSQL-palvelimeen tuotantopalvelinta vastaavat asetukset)</li>
-<li>api/Dockerfile</li>
-<li>frontend/Dockerfile</li>
-<li>frontend/.env</li>
-</ul>
