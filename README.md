@@ -128,7 +128,7 @@ Tässä esimerkissä ei tarvita PostgreSQL serveriä, koska sitä ajetaan Docker
 
 Voit luoda tietokannasta dumpin komennolla:
 <pre>
-pg_dump -U netuser -h 127.0.0.1 -p 5432 --no-owner --schema=public netdb > dbdump.sql
+pg_dump -U netuser -h 127.0.0.1 -p 5432 netdb> dbdump.sql
 </pre>
 Huomaa, että sinulla tulee olla asennettuna PostgreSQL, tai ainakin tuo pg_dump
 
