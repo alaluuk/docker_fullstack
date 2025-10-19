@@ -440,10 +440,10 @@ app.use(express.json());
 app.use(cookieParser());  // Parse cookies
 
 // Routes
-app.use("/api/users", userRouter);
+app.use("/users", userRouter);
 
 // Suojatut reitit
-app.use("/api/book", authenticateToken, bookRouter);
+app.use("/book", authenticateToken, bookRouter);
 ```
 
 ---
