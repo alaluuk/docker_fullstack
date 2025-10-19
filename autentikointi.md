@@ -1,7 +1,7 @@
 ---
 ---
 
-# JWT Autentikointi käyttäen Access Token, Refresh Token ja HTTP-Only Cookie
+# JWT Autentikointi : Access Token, Refresh Token ja HTTP-Only Cookie
 (Pekka Alaluukas 2025)
 
 ## Sisällysluettelo
