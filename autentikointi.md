@@ -1,16 +1,8 @@
 ---
-title: "JWT Autentikointi käyttäen Access Token, Refresh Token ja HTTP-Only Cookie"
-author: "Pekka Alaluukas"
-date: \today
-header-includes:
-  - \usepackage{fancyhdr}
-  - \pagestyle{fancy}
-  - \fancyhead[L]{JWT Autentikointi}
-  - \fancyhead[R]{Sivu \thepage}
-  - \fancyfoot[C]{\today}
 ---
 
 # JWT Autentikointi käyttäen Access Token, Refresh Token ja HTTP-Only Cookie
+(Pekka Alaluukas 2025)
 
 ## Sisällysluettelo
 1. [Yleiskatsaus](#yleiskatsaus)
