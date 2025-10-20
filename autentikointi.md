@@ -475,7 +475,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async (username, password) => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/users/login`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include", // Lähetä ja vastaanota cookies
@@ -494,7 +494,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    await fetch(`${process.env.REACT_APP_API_URL}/users/logout`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/user/logout`, {
       method: "POST",
       credentials: "include",
     });
@@ -505,7 +505,7 @@ export function AuthProvider({ children }) {
 
   const refreshToken = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/users/refresh`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/user/refresh`, {
         method: "POST",
         credentials: "include", // Lähetä cookie
       });
@@ -674,7 +674,7 @@ function App() {
       <div>
         <h1>Book Application</h1>
         <div>
-          {user}
+          {user && `Logged in as: ${user.username}`}
         </div>
       </div>
 
