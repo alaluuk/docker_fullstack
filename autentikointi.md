@@ -770,17 +770,6 @@ root.render(
 - Yksinkertainen HTML-lomake ilman inline-tyylejä
 - Loading-tila estää useita samanaikaisia kirjautumisyrityksiä
 
-### 4. App käyttää AuthProvideria (index.js)
-
-```javascript
-import { AuthProvider } from "./contexts/AuthContext";
-
-root.render(
-  <AuthProvider>
-    <App />
-  </AuthProvider>
-);
-```
 
 ---
 
