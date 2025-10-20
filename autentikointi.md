@@ -542,31 +542,7 @@ export function useAuth() {
 }
 ```
 
-### 2. Suojatut API-kutsut
-
-```javascript
-const { accessToken } = useAuth();
-
-const fetchBooks = async () => {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}/book`, {
-    headers: {
-      "Authorization": `Bearer ${accessToken}`,
-    },
-  });
-
-  if (!res.ok) {
-    if (res.status === 401 || res.status === 403) {
-      // Token vanhentunut, yritä refreshiä
-      await refreshToken();
-      // Yritä uudelleen...
-    }
-  }
-
-  return res.json();
-};
-```
-
-### 3. LoginForm-komponentti (components/LoginForm.js)
+### 2. LoginForm-komponentti (components/LoginForm.js)
 
 ```javascript
 import { useState } from "react";
@@ -635,7 +611,7 @@ function LoginForm({ onClose }) {
 export default LoginForm;
 ```
 
-### 4. App-komponentti (App.js)
+### 3. App-komponentti (App.js)
 
 ```javascript
 import { useState } from "react";
@@ -764,6 +740,25 @@ function App() {
 }
 
 export default App;
+
+```
+
+### 4. index.js
+
+```javascript
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { AuthProvider } from "./contexts/AuthContext";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </React.StrictMode>
+);
 
 ```
 
