@@ -233,7 +233,7 @@ docker push myusername/docker_example-frontend:latest
 </ul>
  </li>
 </ol>
-
+<hr>
 <h2>Autentikointi</h2>
 <a href="autentikointi.md">autentikointi</a>
 
