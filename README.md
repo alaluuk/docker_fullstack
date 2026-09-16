@@ -104,6 +104,93 @@ psql -U netuser -h 127.0.0.1 -d netdb -f dbdump.sql
 <li>frontend/.env</li>
 </ul>
 
+<h2>SSL-yhteys Node.js:n ja PostgreSQL:n välillä</h2>
+
+<p>
+Kun Node.js-sovellus yhdistää PostgreSQL-tietokantaan, yhteys voidaan suojata SSL/TLS-salauksella.
+Tämä tarkoittaa, että tieto kulkee salattuna palvelimen ja sovelluksen välillä.
+</p>
+
+<p>
+Yleinen tapa hallita SSL-asetusta eri ympäristöissä on käyttää ympäristömuuttujaa, esimerkiksi:
+<b>DB_SSL=true</b> tai <b>DB_SSL=false</b>.
+</p>
+
+<p>
+Tällöin sama koodi toimii sekä kehityksessä että tuotannossa ilman muutoksia.
+</p>
+
+<h2>rejectUnauthorized - mitä se tarkoittaa?</h2>
+
+<p>
+Asetus <b>rejectUnauthorized</b> määrittää, tarkistaako Node.js palvelimen SSL-sertifikaatin luotettavuuden.
+</p>
+
+<ul>
+    <li><b>rejectUnauthorized: true</b> → Node tarkistaa, että palvelimen sertifikaatti on luotettava ja oikein allekirjoitettu</li>
+    <li><b>rejectUnauthorized: false</b> → Node ei tarkista sertifikaattia, vaikka yhteys olisi SSL-salattu</li>
+</ul>
+
+<p>
+Kun arvo on true, yhteys on turvallisempi, koska Node varmistaa että se yhdistää oikeaan palvelimeen eikä väliin ole asettunut hyökkääjä.
+</p>
+
+<h2>Esimerkki turvallisesta asetuksesta</h2>
+
+<pre>
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: true
+  }
+});
+</pre>
+
+<h2>Mitä PEM / CA-tiedosto tekee?</h2>
+
+<p>
+Joissain tapauksissa Node.js ei automaattisesti luota palvelimen sertifikaattiin.
+Tällöin tarvitaan CA (Certificate Authority) -tiedosto, yleensä muodossa <b>ca.pem</b>.
+</p>
+
+<p>
+Tämä tiedosto kertoo Node.js:lle, että tietty sertifikaatti on luotettava.
+</p>
+
+<h2>PEM-tiedoston lisääminen koodiin</h2>
+
+<p>
+Jos palvelin käyttää omaa tai itse allekirjoitettua sertifikaattia, CA-tiedosto lisätään näin:
+</p>
+
+<pre>
+const fs = require('fs');
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    ca: fs.readFileSync('/path/to/ca.pem').toString(),
+    rejectUnauthorized: true
+  }
+});
+</pre>
+
+<h2>Milloin PEM-tiedostoa EI tarvita?</h2>
+
+<p>
+PEM-tiedostoa ei yleensä tarvita, jos käytät pilvipalvelun (esimerkiksi Render, AWS tai Google Cloud) hallittua PostgreSQL-tietokantaa,
+koska ne käyttävät julkisesti luotettuja sertifikaatteja.
+</p>
+
+<h2>Yhteenveto</h2>
+
+<ul>
+    <li><b>rejectUnauthorized: true</b> → turvallinen ja suositeltu tuotannossa</li>
+    <li><b>rejectUnauthorized: false</b> → sallii yhteyden ilman sertifikaatin tarkistusta (vain kehitykseen)</li>
+    <li><b>ca.pem</b> → tarvitaan vain, jos Node ei automaattisesti luota palvelimen sertifikaattiin</li>
+</ul>
+
+
 <h2>Deploy Renderiin</h2>
 <p>
 Render ei osaa lukea docker-compose.yml -tiedostoa ja ajaa kaikkia palveluita yhdellä komennolla. Render tukee kuitenkin Dockerfilea, eli voit ajaa yhden kontin kerrallaan suoraan Dockerfilestä. Joten jaetaan sovellus osiin seuraavasti:

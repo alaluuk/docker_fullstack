@@ -4,7 +4,7 @@ const { Pool } = pkg;
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : false,
+  ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: true } : false,
 });
 
 // search_pathin asetus ei ole tarpeen jos käytät public-schemaa
