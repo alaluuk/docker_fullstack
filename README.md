@@ -16,35 +16,51 @@ mv frontend/.env.example frontend/.env
   <li>
   anna sovelluksen juurikansiossa komento 
 <pre>
-docker compose up --build
+docker compose up --build --watch
 </pre>
   </li>
 </ul>
 </li>
 <li>Avaa selaimeen sivu http://localhost:3001/book jolloin sinun pitäisi nähdä book-taulun data</li>
 <li>Avaa selaimeen sivu http://localhost:3000 jolloin sinun pitäisi nähdä React-sovelluksessa tietokannassa olevat kirjat</li>
-<li>Kokeile muokata React sovelluksen App.js tiedostoa ja tutki päivittyykö web-sivu</li>
+<li>Kokeile muokata React sovelluksen App.jsx tiedostoa ja tutki päivittyykö web-sivu</li>
 </ol>
 
 <h2>Buildaus</h2>
 <ol>
 <li>Kehityksessä sovellus buildataan komennolla
 <pre>
-docker compose up --build
+docker compose up --build --watch
 </pre>
 Jolloin suoritetaan sekä docker-compose.yml, että docker-compose.override.yml
 </li>
-<li>Tuotannossa sovellus buildataan komennolla
+<li>Ilman kehityksen tiedostoliitoksia sovellus käynnistetään komennolla
 <pre>
 docker compose -f docker-compose.yml up --build
 </pre>
-Jolloin suoritetaan vain docker-compose.yml
+Jolloin suoritetaan vain docker-compose.yml. Frontend käyttää tässäkin Viten kehityspalvelinta; tämä komento ei tee tuotantobuildia.
 </li>
 </ol>
 
+<p>Frontend käyttää Viteä ja React 19:ää. Docker-kuvat käyttävät Node.js 24:ää.
+Paikalliseen frontend-kehitykseen tarvitset Node.js-version 20.19+ tai 22.12+ (suositus: 24).
+Asenna lukitut riippuvuudet kummassakin sovelluskansiossa komennolla <b>npm ci</b>.
+API käyttää Express 5:tä.</p>
+<p>API:n muutokset synkronoidaan konttiin ja palvelin käynnistetään uudelleen Compose Watchilla
+(Docker Compose 2.23+). Nodemonia ei tarvita. Paikallisesti API:n kehityskomento on
+<b>npm run dev</b>, joka käyttää Noden omaa watch-toimintoa.</p>
+<p>Frontendin API-osoite määritetään tiedostossa <b>frontend/.env</b> muuttujalla
+<b>VITE_API_URL</b>. Jos sinulla on vanha .env-tiedosto, vaihda
+<b>REACT_APP_API_URL</b> nimeksi <b>VITE_API_URL</b> ja juuren .env-tiedostossa
+<b>WATCHPACK_POLLING</b> nimeksi <b>CHOKIDAR_USEPOLLING</b>.</p>
+<p>Tuotantobuildin voit tehdä frontend-kansiossa komennolla <b>npm run build</b>.
+Julkaise syntyvä <b>dist</b>-kansio staattisen sivuston palvelimella.
+VITE_API_URL asetetaan ennen buildia, koska osoite sisältyy rakennettuun JavaScriptiin.
+Komento <b>npm run preview</b> on buildin paikallista tarkistamista varten.</p>
+
 <h2>Työskentely</h2>
 <ul>
-  <li>Kun haluat lopettaa kehityksen, anna komento <b>docker compose down</b> ja kun haluat jatkaa kehitystä anna komento <b>docker compose up --build</b></li>
+  <li>Kun haluat lopettaa kehityksen, anna komento <b>docker compose down</b> ja kun haluat jatkaa kehitystä anna komento <b>docker compose up --build --watch</b></li>
   <li>Jos teet muutoksia Dockerfile tai package.json tiedostoihin, sinun tulee käynnistää kontit uudelleen.</li>
 </ul>
 
@@ -220,19 +236,14 @@ docker push myusername/docker_example-api:latest
 </ol>
 <h4>Frontend</h4>
 <ol>
-<li>Suorita komennot
-<pre>
-docker build -t myusername/docker_example-frontend:latest frontend/
-docker push myusername/docker_example-frontend:latest
-</pre>
-</li>
-<li>Renderissä:
-<ul>
-  <li>luo uusi WebService ja valitse Existing image ja kirjoita Image URL (=myusername/docker_example-frontend)</li>
-  <li>Lisää Environment Variablesiin REACT_APP_API_URL ja kopioi siihen backendisi URL (katso ettei loppuun tule kauttaviivaa)</li>
-</ul>
- </li>
+<li>Luo Renderissä <b>Static Site</b> ja yhdistä projektin Git-repositorio.</li>
+<li>Aseta <b>Root Directory</b> arvoksi <b>frontend</b>, build-komennoksi
+<b>npm ci &amp;&amp; npm run build</b> ja julkaisukansioksi <b>dist</b>.</li>
+<li>Lisää buildin Environment Variablesiin <b>VITE_API_URL</b> ja kopioi siihen
+backendisi URL (katso ettei loppuun tule kauttaviivaa).</li>
 </ol>
+<p>Frontendin Dockerfile on kehityspalvelinta varten. Staattinen julkaisu käyttää
+Viten tuotantobuildia.</p>
 <hr>
 <h2>Autentikointi</h2>
 <a href="autentikointi.md">autentikointi</a>

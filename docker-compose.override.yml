@@ -1,9 +1,10 @@
 services:
   api:
-    volumes:
-      - ./api:/usr/src/app
-      - /usr/src/app/node_modules
-    command: npm run dev           # Api käynnistetään Nodemonilla
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./api/src
+          target: /usr/src/app/src
 
   frontend:
     volumes:

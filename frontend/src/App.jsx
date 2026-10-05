@@ -7,7 +7,7 @@ function App() {
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/book`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/book`);
         if (!res.ok) throw new Error("Verkkovirhe");
         const data = await res.json();
         setBooks(data);

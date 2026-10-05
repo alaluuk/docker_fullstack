@@ -1,11 +1,11 @@
-FROM node:20
+FROM node:24
 
 WORKDIR /usr/src/app
 
-# Kopioi package.json ja + package-lock.json ensin (nopeampi cache npm installille)
-COPY package*.json ./
+# Kopioi riippuvuustiedostot ensin Dockerin välimuistia varten.
+COPY package.json package-lock.json ./
 
-RUN npm install -g nodemon && npm install
+RUN npm ci
 
 # Kopioidaan sovelluksen lähdekoodi
 COPY . .
