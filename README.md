@@ -32,9 +32,9 @@ Frontendin automaattisen päivityksen hoitaa Vite. Tämä asetus vaatii Docker C
 <li>Kokeile muokata React sovelluksen App.jsx tiedostoa ja tutki päivittyykö web-sivu</li>
 </ol>
 
-<h2>Buildaus</h2>
+<h2>Rakentaminen ja käynnistäminen</h2>
 <ol>
-<li>Kehityksessä sovellus buildataan komennolla
+<li>Kehityksessä Docker-kuvat rakennetaan ja kontit käynnistetään komennolla
 <pre>
 docker compose up --build --watch
 </pre>
@@ -60,6 +60,9 @@ API käyttää Express 5:tä.</p>
 <b>npm start</b>, ja Compose hoitaa uudelleenkäynnistyksen koodin muuttuessa.</p>
 <p>Frontendin API-osoite määritetään tiedostossa <b>frontend/.env</b> muuttujalla
 <b>VITE_API_URL</b>.</p>
+
+<h2>Tuotantoversion rakentaminen ja julkaiseminen</h2>
+
 <p>Tuotantopalvelimella React-sovellus voidaan julkaista Express-API:n kautta.
 Aseta ennen buildia frontendin <b>VITE_API_URL</b> tyhjäksi (<b>VITE_API_URL=</b>),
 jolloin frontend hakee kirjat saman palvelimen <b>/book</b>-osoitteesta.
