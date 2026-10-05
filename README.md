@@ -38,7 +38,11 @@ Frontendin automaattisen päivityksen hoitaa Vite. Tämä asetus vaatii Docker C
 <pre>
 docker compose up --build --watch
 </pre>
-Jolloin suoritetaan sekä docker-compose.yml, että docker-compose.override.yml
+Jolloin suoritetaan sekä docker-compose.yml, että docker-compose.override.yml.
+Override-tiedosto täydentää perusasetuksia kehitystä varten: sen <b>develop.watch</b>-osio
+synkronoi API:n koodimuutokset konttiin ja käynnistää API-kontin uudelleen.
+Lisäksi se liittää frontendin lähdekansion konttiin, jotta Vite näkee paikalliset muutokset,
+ja määrittää tietokannan muistirajan sekä oman PostgreSQL-asetustiedoston.
 </li>
 <li>Ilman kehityksen tiedostoliitoksia sovellus käynnistetään komennolla
 <pre>
