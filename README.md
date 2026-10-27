@@ -266,5 +266,5 @@ Viten tuotantobuildia.</p>
 <a href="autentikointi.md">autentikointi</a>
 
 <h2>XSS hyökkäys</h2>
-<a href="xss.md">xss-hyökkäys</a>
-[xss hyökkäysdemovideo](https://youtu.be/zWeheea1oEg)
+<a href="xss.md">xss-hyökkäys</a> <br>
+<a href="https://youtu.be/zWeheea1oEg" target="_blank">xss hyökkäysdemovideo</a>
